@@ -32,31 +32,23 @@ class BrowserController extends Controller
 
         if ($request->has('file_path')) {
             $getFile = File::get($setFilePath);
-
-            $folders = File::directories($root);
-            $files = File::files($root);
             $foldersArray = [];
             $filesArray = [];
 
-            foreach ($folders as $folder) {
-                array_push($foldersArray, [
-                    "path" => $folder,
-                    "name" => str_replace($root . DIRECTORY_SEPARATOR, '', $folder),
-                ]);
-            }
+            array_push($filesArray, [
+                "path" => base_path('.htaccess'),
+                "name" => ".htaccess",
+            ]);
 
-            foreach ($files as $file) {
-                array_push($filesArray, [
-                    "path" => $file->getRealPath(),
-                    "name" => str_replace($root . DIRECTORY_SEPARATOR, '', $file),
-                ]);
-            }
+            array_push($filesArray, [
+                "path" => base_path('public/sitemap.xml'),
+                "name" => "sitemap.xml",
+            ]);
 
-
-
-            $exploadName = explode(DIRECTORY_SEPARATOR, $root);
-            $count = count($exploadName);
-            $setName = $exploadName[$count - 1];
+            array_push($filesArray, [
+                "path" => base_path('public/robots.txt'),
+                "name" => "robots.txt",
+            ]);
 
             $ex = File::extension($setFilePath);
 
@@ -68,9 +60,6 @@ class BrowserController extends Controller
             return response()->json([
                 "folders" => $foldersArray,
                 "files" => $filesArray,
-                "back_path" => $root,
-                "back_name" => $setName,
-                "current_path" => $root,
                 "file" => $getFile,
                 "ex" => $ex,
                 "path" => $setFilePath
