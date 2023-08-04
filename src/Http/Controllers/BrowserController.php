@@ -30,13 +30,11 @@ class BrowserController extends Controller
             $type = "home";
         }
 
-
-
         if ($request->has('file_path')) {
             $getFile = File::get($setFilePath);
 
-            $folders =  File::directories($root);
-            $files =  File::files($root);
+            $folders = File::directories($root);
+            $files = File::files($root);
             $foldersArray = [];
             $filesArray = [];
 
@@ -62,7 +60,7 @@ class BrowserController extends Controller
 
             $ex = File::extension($setFilePath);
 
-            if ($ex === 'webp' || $ex === 'jpg' || $ex === 'png' || $ex === 'svg' || $ex === 'jpeg' || $ex === 'ico' ||  $ex === 'gif' || $ex === 'tif') {
+            if ($ex === 'webp' || $ex === 'jpg' || $ex === 'png' || $ex === 'svg' || $ex === 'jpeg' || $ex === 'ico' || $ex === 'gif' || $ex === 'tif') {
                 $imagBase64 = base64_encode($getFile);
                 $getFile = $imagBase64;
             }
@@ -86,48 +84,6 @@ class BrowserController extends Controller
                     "success" => true
                 ]);
             }
-        } else {
-            $folders =  File::directories($root);
-            $files =  File::files($root);
-            $foldersArray = [];
-            $filesArray = [];
-
-            foreach ($folders as $folder) {
-                array_push($foldersArray, [
-                    "path" => $folder,
-                    "name" => str_replace($root . DIRECTORY_SEPARATOR, '', $folder),
-                ]);
-            }
-
-            foreach ($files as $file) {
-                $ex = File::extension($file);
-                array_push($filesArray, [
-                    "path" => $file->getRealPath(),
-                    "name" => str_replace($root . DIRECTORY_SEPARATOR, '', $file),
-                    "ex" => $ex
-                ]);
-            }
-
-            if ($root == base_path()) {
-                array_push($filesArray, [
-                    "path" => base_path('.env'),
-                    "name" => ".env",
-                ]);
-            }
-
-            $exploadName = explode(DIRECTORY_SEPARATOR, $root);
-            $count = count($exploadName);
-            $setName = $exploadName[$count - 2];
-
-
-
-            return response()->json([
-                "folders" => $foldersArray,
-                "files" => $filesArray,
-                "back_path" => str_replace(DIRECTORY_SEPARATOR . $name, '', $root),
-                "back_name" => $setName,
-                "current_path" => $root,
-            ], 200);
         }
     }
 }

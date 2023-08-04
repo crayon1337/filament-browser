@@ -41,13 +41,13 @@ Vue.component('browser', {
             path: ""
         }
     },
-    mounted(){
+    mounted() {
         this.files = this.$props.collection;
         this.history = this.$props.collection;
     },
-    methods:{
-        getFolder(data){
-            axios.post(this.$props.url+'/json', {
+    methods: {
+        getFolder(data) {
+            axios.post(this.$props.url + '/json', {
                 folder_path: data.path,
                 folder_name: data.name,
                 type: "folder"
@@ -59,8 +59,8 @@ Vue.component('browser', {
                 this.history = response.data;
             })
         },
-        getFile(data){
-            axios.post(this.$props.url+'/json', {
+        getFile(data) {
+            axios.post(this.$props.url + '/json', {
                 file_path: data.path,
                 file_name: data.name,
                 type: "file"
@@ -69,23 +69,23 @@ Vue.component('browser', {
                     folders: response.data.folders,
                     files: response.data.files,
                 }
-                this.path=  response.data.path;
+                this.path = response.data.path;
                 this.history = response.data;
-                if(response.data.ex == 'php'){
+                if (response.data.ex == 'php') {
                     this.cmOptions.mode = 'application/x-httpd-php'
                 }
-                else if(response.data.ex == 'js' || response.data.ex == 'json' || response.data.ex == 'lock'){
-                    this.cmOptions.mode =  {
+                else if (response.data.ex == 'js' || response.data.ex == 'json' || response.data.ex == 'lock') {
+                    this.cmOptions.mode = {
                         name: 'javascript',
                         json: true
                     }
                 }
-                else if(response.data.ex == 'css'){
-                    this.cmOptions.mode ='text/css'
+                else if (response.data.ex == 'css') {
+                    this.cmOptions.mode = 'text/css'
                 }
 
-                if(response.data.ex == 'webp' || response.data.ex == 'svg' || response.data.ex == 'png' || response.data.ex == 'jpg' || response.data.ex == 'jpeg' || response.data.ex == 'tif' || response.data.ex == 'gif' || response.data.ex == 'ico' ){
-                    this.imagePath = 'data:image/png;base64,'+response.data.file;
+                if (response.data.ex == 'webp' || response.data.ex == 'svg' || response.data.ex == 'png' || response.data.ex == 'jpg' || response.data.ex == 'jpeg' || response.data.ex == 'tif' || response.data.ex == 'gif' || response.data.ex == 'ico') {
+                    this.imagePath = 'data:image/png;base64,' + response.data.file;
                 }
                 else {
                     this.fileContent = response.data.file;
@@ -93,8 +93,11 @@ Vue.component('browser', {
 
             })
         },
-        goHome(){
-            axios.post(this.$props.url+'/json').then(data => {
+        goHome() {
+            window.location.href = 'admin/browser';
+        },
+        goHomeOld() {
+            axios.post(this.$props.url + '/json').then(data => {
                 this.files = {
                     folders: data.data.folders,
                     files: data.data.files,
@@ -105,8 +108,8 @@ Vue.component('browser', {
                 this.imagePath = false;
             })
         },
-        goBack(){
-            axios.post(this.$props.url+'/json', {
+        goBack() {
+            axios.post(this.$props.url + '/json', {
                 folder_path: this.history.back_path,
                 folder_name: this.history.back_name,
                 type: "back"
@@ -120,13 +123,13 @@ Vue.component('browser', {
                 this.imagePath = false;
             })
         },
-        saveFile(){
-            axios.post(this.$props.url+'/json', {
+        saveFile() {
+            axios.post(this.$props.url + '/json', {
                 path: this.path,
                 content: this.fileContent,
                 type: "save"
             }).then(data => {
-                if(data.data.success){
+                if (data.data.success) {
                     this.$swal({
                         toast: true,
                         position: 'top-end',
@@ -141,7 +144,7 @@ Vue.component('browser', {
             })
         }
     },
-    props:{
+    props: {
         url: String,
         collection: Object
     }

@@ -20,33 +20,25 @@ class Browser extends Page
 
     protected function getViewData(): array
     {
-        $folders =  File::directories(base_path());
-        $files =  File::files(base_path());
         $foldersArray = [];
         $filesArray = [];
         $root = base_path();
         $name = base_path();
 
-        foreach ($folders as $folder) {
-            array_push($foldersArray, [
-                "path" => $folder,
-                "name" => str_replace(base_path() . DIRECTORY_SEPARATOR, '', $folder),
-            ]);
-        }
-
-        foreach ($files as $file) {
-            array_push($filesArray, [
-                "path" => $file->getRealPath(),
-                "name" => str_replace(base_path() . DIRECTORY_SEPARATOR, '', $file),
-            ]);
-        }
-
-        if ($root == base_path()) {
-            array_push($filesArray, [
-                "path" => base_path('.env'),
-                "name" => ".env",
-            ]);
-        }
+        array_push($filesArray, [
+            [
+                "path" => base_path('public/.htaccess'),
+                "name" => ".htaccess",
+            ],
+            [
+                "path" => base_path('public/sitemap.xml'),
+                "name" => "sitemap.xml",
+            ],
+            [
+                "path" => base_path('public/robots.txt'),
+                "name" => "robots.txt",
+            ]
+        ]);
 
         $exploadName = explode(DIRECTORY_SEPARATOR, $root);
         $count = count($exploadName);
