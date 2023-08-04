@@ -10,14 +10,13 @@ class Browser extends Page
     use HasPageShield;
 
     protected static ?string $navigationIcon = 'heroicon-o-folder';
-
     protected static string $view = 'filament-browser::browser';
-
     protected static ?string $navigationGroup = 'Settings';
+    protected static ?int $navigationSort = 5;
 
     protected static function getNavigationLabel(): string
     {
-        return __('Browser');
+        return __('File Manager');
     }
 
     protected function getViewData(): array
