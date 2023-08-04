@@ -27,7 +27,7 @@ class Browser extends Page
         $name = base_path();
 
         array_push($filesArray, [
-            "path" => base_path('public/.htaccess'),
+            "path" => base_path('.htaccess'),
             "name" => ".htaccess",
         ]);
 
