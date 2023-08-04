@@ -3,10 +3,12 @@
 namespace io3x1\FilamentBrowser\Pages;
 
 use Filament\Pages\Page;
-use Illuminate\Support\Facades\File;
+use BezhanSalleh\FilamentShield\Traits\HasPageShield;
 
 class Browser extends Page
 {
+    use HasPageShield;
+
     protected static ?string $navigationIcon = 'heroicon-o-folder';
 
     protected static string $view = 'filament-browser::browser';
