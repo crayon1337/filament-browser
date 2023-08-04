@@ -26,18 +26,18 @@ class Browser extends Page
         $name = base_path();
 
         array_push($filesArray, [
-            [
-                "path" => base_path('public/.htaccess'),
-                "name" => ".htaccess",
-            ],
-            [
-                "path" => base_path('public/sitemap.xml'),
-                "name" => "sitemap.xml",
-            ],
-            [
-                "path" => base_path('public/robots.txt'),
-                "name" => "robots.txt",
-            ]
+            "path" => base_path('public/.htaccess'),
+            "name" => ".htaccess",
+        ]);
+
+        array_push($filesArray, [
+            "path" => base_path('public/sitemap.xml'),
+            "name" => "sitemap.xml",
+        ]);
+
+        array_push($filesArray, [
+            "path" => base_path('public/robots.txt'),
+            "name" => "robots.txt",
         ]);
 
         $exploadName = explode(DIRECTORY_SEPARATOR, $root);
