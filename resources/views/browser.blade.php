@@ -6,9 +6,6 @@
                     :collection="{{ json_encode([
                         'folders' => $folders,
                         'files' => $files,
-                        'back_path' => $back_path,
-                        'back_name' => $back_name,
-                        'current_path' => $current_path,
                     ]) }}"
                     :url="'{{ url('admin/browser') }}'" inline-template v-cloak>
                     <div>
